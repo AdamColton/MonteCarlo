@@ -99,7 +99,6 @@ class PruningMC(object):
     lenMoves = len(moves)
     halvingStepSize = config.positions / 2
     nextHalving = halvingStepSize
-    games = 0
     
     while positions < config.positions :
       if (positions > nextHalving):
@@ -111,11 +110,8 @@ class PruningMC(object):
           lenMoves = math.ceil(lenMoves/2)
           moves = [move[1] for move in results[-lenMoves:]]
           i %= lenMoves
-          print(games)
-          games = 0
         else:
           nextHalving = config.positions
-      games += 1
       move = moves[i]
       sim = boards[move].copy()
       positions += fullMonkeyCarloGame(sim)

@@ -3,7 +3,7 @@ import sys
 import inspect  
 customConfig = True
 try:
-  from configs import custom
+  from config import custom
 except ImportError:
   customConfig = False
   
@@ -15,6 +15,6 @@ if customConfig:
         
   getClasses = lambda module: { name:obj for name, obj in inspect.getmembers(sys.modules[module]) if inspect.isclass(obj) }
   myClasses = getClasses("config")
-  customClasses = getClasses("configs.custom")
+  customClasses = getClasses("config.custom")
   for myClassName, myClassObj in myClasses.items():
     if myClassName in customClasses: mergeCustom(myClassObj, customClasses[myClassName])

@@ -1,5 +1,6 @@
 import unittest
 from libs.connectfour import Game
+from libs.connectfour import DeserializeGame
 from libs.montecarlo import MonteCarlo
 
 class TestConnectFour(unittest.TestCase):
@@ -36,6 +37,15 @@ class TestConnectFour(unittest.TestCase):
     for i in range(6):
       game.move(0)
     self.assertEqual(game.getMoves(), [i for i in range(1,7)])
+  def test_serializeDeserialize(self):
+    game = Game()
+    for i in range(13):
+      game.move(i % 5)
+    game2 = DeserializeGame(game.serialize())
+    self.assertEqual(game.turn, game2.turn)
+    self.assertEqual(game.gameOver, game2.gameOver)
+    self.assertEqual(game.winner, game2.winner)
+    self.assertEqual(game.moveCount, game2.moveCount)
     
 class TestMonteCarlo(unittest.TestCase):
   def test_montecarlo(self):
@@ -43,4 +53,4 @@ class TestMonteCarlo(unittest.TestCase):
     ai = MonteCarlo()
     ai.move(game)
     
-unittest.main()
+if __name__ == '__main__' : unittest.main()

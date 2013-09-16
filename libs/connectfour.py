@@ -56,6 +56,13 @@ class Game(object):
     return "\n".join(ret)
   def copy(self):
     return CopyGame(self)
+  def serialize(self):
+    s = "".join(( "".join((str(i) for i in row)) for row in self.board)) # WTF, is this lisp?
+    s += str(self.turn)
+    s += str(int(self.gameOver))
+    s += str(self.winner)
+    s += str(self.moveCount)
+    return s
 
 class CopyGame(Game):
   def __init__(self, parent):
@@ -64,3 +71,11 @@ class CopyGame(Game):
     self.gameOver = parent.gameOver
     self.winner = parent.winner
     self.moveCount = parent.moveCount
+    
+class DeserializeGame(Game):
+  def __init__(self, gameString):
+    self.board = [ [int(gameString[i + j*7]) for i in range(7)] for j in range(6) ]
+    self.turn = int(gameString[42])
+    self.gameOver = bool(int(gameString[43]))
+    self.winner = int(gameString[44])
+    self.moveCount = int(gameString[45:])

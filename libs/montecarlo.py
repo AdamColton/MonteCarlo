@@ -123,6 +123,15 @@ class PruningMC(object):
     game.move( results[-1][1] )
     
 class MemoryMC(object):
+  """
+  This technique does not work.
+  The computation gained is
+  1 / BF**2
+  where BF is the branching factor of the game.
+  for connectfour it's 2%
+  for Chess its 0.05%
+  for Go it's 0.0013%
+  """
   def __init__(self):
     self.memo = {}
   def move(self, game):

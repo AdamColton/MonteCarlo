@@ -6,11 +6,11 @@ class MonteCarlo:
   positions = 4200
   
 class Compete:
-  ai1 = "MonkeyCarlo"
+  ai1 = "PruningMC"
   ai2 = "CcMonteCarlo"
   randomizeFirstMove = True
   games = 10
-  display = DisplayOptions.dot
+  display = DisplayOptions.verbose
   
 class PlayComputer:
-  ai = "CcMonteCarlo"
+  ai = "PruningMC"

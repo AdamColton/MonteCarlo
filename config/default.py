@@ -9,11 +9,12 @@ class Compete:
   ai1 = "BookMC"
   ai2 = "CcMonteCarlo"
   randomizeFirstMove = True
-  games = 50
+  games = 100
   display = DisplayOptions.verbose
   
 class PlayComputer:
-  ai = "PruningMC"
+  ai = "BookMC"
   
 class BookBuilder:
   researchDepth = 100
+  cores = -2

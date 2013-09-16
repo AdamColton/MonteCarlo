@@ -173,7 +173,18 @@ def getBook():
     return {}
   bookStr = file.read()
   file.close()
-  book = {val[0]: [val[1], val[2]] for val in ([int(i) for i in line.split(',')] for line in bookStr.split('\n'))}
+  book = {}
+  for line in bookStr.split('\n'):
+    try:
+      vals = [int(val) for val in line.split(',')]
+      book[vals[0]] = [vals[1], vals[2]]
+    except ValueError:
+      """
+      Transient error I believe is related to reading and writing
+      simultaneously. Skipping one table entry should not significantly
+      effect the outcome of the game.
+      """
+      pass
   return book
 
 class BookMC(object):

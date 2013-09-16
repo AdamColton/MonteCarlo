@@ -1,5 +1,6 @@
 from libs import montecarlo
 from libs.connectfour import Game
+from libs import multiprocHelpers
 from config import BookBuilder as config
 import math
 
@@ -41,7 +42,7 @@ def publish(book):
 if __name__ == '__main__' :
   book = montecarlo.getBook()
   responses = multiprocessing.JoinableQueue()
-  for _ in  range( multiprocessing.cpu_count() ):
+  for _ in  range( multiprocHelpers.calculateCores(config.cores) ):
     p = multiprocessing.Process(target=worker, args=(responses,))
     p.daemon = True
     p.start()

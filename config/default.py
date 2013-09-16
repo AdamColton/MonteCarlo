@@ -6,7 +6,7 @@ class MonteCarlo:
   positions = 8400
   
 class Compete:
-  ai1 = "MemoryMC"
+  ai1 = "BookMC"
   ai2 = "CcMonteCarlo"
   randomizeFirstMove = True
   games = 50
@@ -14,3 +14,6 @@ class Compete:
   
 class PlayComputer:
   ai = "PruningMC"
+  
+class BookBuilder:
+  researchDepth = 100

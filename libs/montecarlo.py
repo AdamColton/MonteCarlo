@@ -165,3 +165,43 @@ class MemoryMC(object):
     results = [(moveRecord[move][1] / moveRecord[move][0], move) for move in moves]
     results.sort()
     game.move( results[-1][1] )
+    
+def getBook():
+  try:
+    file = open("book.txt",'r')
+  except FileNotFoundError:
+    return {}
+  bookStr = file.read()
+  file.close()
+  book = {val[0]: [val[1], val[2]] for val in ([int(i) for i in line.split(',')] for line in bookStr.split('\n'))}
+  return book
+
+class BookMC(object):
+  def __init__(self):
+    self.book = getBook()
+  def move(self, game):
+    moves = game.getMoves()
+    moveRecord = {}
+    boards = {i:game.copy() for i in moves}
+    positions = 0
+    for move in moves:
+      boards[move].move(move)
+      id = boards[move].boardId()
+      moveRecord[id] = [1.0,0.0]
+      if id in self.book:
+        moveRecord[id][0] = self.book[id][0]
+        moveRecord[id][1] = self.book[id][1]
+      positions += 1
+    i = 0
+    lenMoves = len(moves)
+    while positions < config.positions :
+      move = moves[i]
+      sim = boards[move].copy()
+      id = sim.boardId()
+      positions += fullMonkeyCarloGame(sim)
+      moveRecord[id][0] += 1
+      moveRecord[id][1] += moveValue(game, sim)
+      i = (i + 1) % lenMoves
+    results = [(moveRecord[boards[move].boardId()][1] / moveRecord[boards[move].boardId()][0], move) for move in moves]
+    results.sort()
+    game.move( results[-1][1] )

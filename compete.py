@@ -21,10 +21,12 @@ if __name__ == '__main__' :
       player = players.pop(0)
       player.move(game)
       players.append(player)
-    if config.display >= DisplayOptions.summary: print(game)
     if config.display == DisplayOptions.dot: print('.', end='', flush=True)
     increment = 0
     if (game.winner == game.players.two) != playersReversed : increment = 1
+    if config.display >= DisplayOptions.summary:
+      print(game)
+      print(aiNames[increment])
     scores[increment] += 1
 
   if config.display == DisplayOptions.dot: print()

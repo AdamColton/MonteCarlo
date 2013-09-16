@@ -6,7 +6,7 @@ class MonteCarlo:
   positions = 4200
   
 class Compete:
-  ai1 = "PruningMC"
+  ai1 = "MemoryMC"
   ai2 = "CcMonteCarlo"
   randomizeFirstMove = True
   games = 10

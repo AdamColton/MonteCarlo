@@ -56,6 +56,12 @@ class Game(object):
     return "\n".join(ret)
   def copy(self):
     return CopyGame(self)
+  def boardId(self):
+    sum = 0
+    for j in range(6):
+      for i in range(7):
+        sum += self.board[j][i] * (3**(i+j*7))
+    return sum
   def serialize(self):
     s = "".join(( "".join((str(i) for i in row)) for row in self.board)) # WTF, is this lisp?
     s += str(self.turn)

@@ -121,3 +121,39 @@ class PruningMC(object):
     results = [(moveRecord[move][1] / moveRecord[move][0], move) for move in moves]
     results.sort()
     game.move( results[-1][1] )
+    
+class MemoryMC(object):
+  def __init__(self):
+    self.memo = {}
+  def move(self, game):
+    moves = game.getMoves()
+    moveRecord = {i:[1.0, 0.0] for i in moves}
+    boards = {i:game.copy() for i in moves}
+    positions = 0
+    for move in moves:
+      boards[move].move(move)
+      key = boards[move].boardId
+      if key in self.memo:
+        moveRecord[move] = self.memo[key]
+      positions += 1
+    self.memo = {}
+    i = 0
+    lenMoves = len(moves)
+    while positions < config.positions :
+      move = moves[i]
+      sim = boards[move].copy()
+      monkeyCarlo(sim) # make random opponent move
+      monkeyCarlo(sim) # make our move
+      key = sim.boardId()
+      positions += fullMonkeyCarloGame(sim) + 2
+      self.memo[key] = self.memo.get(key, [1.0, 0.0])
+      self.memo[key][0] += 1
+      moveRecord[move][0] += 1
+      v = moveValue(game, sim)
+      self.memo[key][1] += v
+      moveRecord[move][1] += v
+      i = (i + 1) % lenMoves
+    results = [(moveRecord[move][1] / moveRecord[move][0], move) for move in moves]
+    results.sort()
+    game.move( results[-1][1] )
+  

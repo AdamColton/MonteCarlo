@@ -132,7 +132,7 @@ class MemoryMC(object):
     positions = 0
     for move in moves:
       boards[move].move(move)
-      key = boards[move].boardId
+      key = boards[move].boardId()
       if key in self.memo:
         moveRecord[move] = self.memo[key]
       positions += 1
@@ -156,4 +156,3 @@ class MemoryMC(object):
     results = [(moveRecord[move][1] / moveRecord[move][0], move) for move in moves]
     results.sort()
     game.move( results[-1][1] )
-  
